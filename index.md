@@ -1,5 +1,5 @@
 ---
-title: "Capstone analysis Cyclistic"
+title: "Capstone Case Study"
 author: "Thomas"
 date: '2022-03-24'
 output: html_document
