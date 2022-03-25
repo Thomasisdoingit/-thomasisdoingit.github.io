@@ -78,7 +78,7 @@ we get this beautiful dataframe:
 So we have 682 stations on the network, cool and now we have their matching ID and lat/lng.
 
 However despite searching for a very long time trying to use fill() or some kind of join. I can't figure out how to populate the cells in May_trips.  
-  ![a screenshot ](https://github.com/Thomasisdoingit/thomasisdoingit.github.io/blob/13a321276cefa09d88ed435fa212c069549db700/May_trips%20screenshot.png)   
+  ![a screenshot ](May_trips screenshot.png)   
   
   
   Pls send help
