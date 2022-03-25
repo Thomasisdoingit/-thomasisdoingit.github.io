@@ -31,11 +31,13 @@ Furthermore I would like to sharpen my R skills.
 
 * Data integrity 
 
-First I loaded part of the data set using 
-` January_trips <- read.csv(file='202101-divvy-tripdata.csv')`
+First I loaded part of the data set using  
 
-Then I get an idea of the dataset using  ` head(January_trips)  
-View(January_trips) `
+`January_trips <- read.csv(file='202101-divvy-tripdata.csv')`
+
+Then I get an idea of the dataset using  
+`head(January_trips)  
+View(January_trips)`
 
 I repeat this process for each month and check for data integrity.   
 
