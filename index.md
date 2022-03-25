@@ -56,7 +56,7 @@ View(April_trips)`
 View(May_trips)`  
 
 
-Here we can see the this file is incomplete.
+Here we can see that this file is incomplete.
 We are missing the data points for start_station_name, start_station_id, end_station_name, end_station_id.  
 
 Fortunately we can populate these data points using start_lat and start_long values and end_lat end_long and associating lat and long values with stations.
@@ -75,9 +75,9 @@ View(Stations)`
 
 we get this beautiful dataframe:
 ![a screenshot ](Stations.png)  
-So we have 682 stations on the network, cool and now we have their matching ID and lat/lng.
+So we have 682 stations on the network, and now we have their matching ID and lat/lng.
 
-However despite searching for a very long time trying to use fill() or some kind of join. I can't figure out how to populate the cells in May_trips.  
+However despite searching for a very long time trying to use `fill()` or some kind of join. I can't figure out how to populate the cells in May_trips.  
   ![a screenshot ](May_trips_screenshot.png)   
   
   
