@@ -123,7 +123,9 @@ glimpse(Yearly_members)
 ```
 When doing `summary(Yearly_casuals)` and `summary(Yearly_members)` I realize a lot of my variable are in the wrong types.  
 
-I tried using this as shown [here] (https://cran.r-project.org/web/packages/hablar/vignettes/convert.html)
+I tried using this as shown [here] (https://cran.r-project.org/web/packages/hablar/vignettes/convert.html)  
+  
+  
 ```{r, eval= F, echo=TRUE}
 install.packages("hablar")
 library(hablar)
@@ -131,6 +133,7 @@ Yearly_casuals %>%  type.convert(num("tripduration"),as_date("start_time"), as_d
 
 summary(Yearly_casuals)
 summary(Yearly_members)
-```
+```  
+
 But I get an error:
 ![the error] (https://github.com/Thomasisdoingit/thomasisdoingit.github.io/blob/db5197072053a6f2d2a53b86d18d264cda80ffc7/wrong%20data%20type.png)
