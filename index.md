@@ -6,6 +6,7 @@ output: html_document
 ---
 
 
+
 ## Business task 
 
 
@@ -18,7 +19,16 @@ The business task we will examine is the following:
 Using the data from Cyclistic (Cyclistic is a fictional company the data used comes from Motivate International Inc. under this [licence](https://ride.divvybikes.com/data-license-agreement)).
 
 The data is downloaded and will be treated locally using RStudio.
-We will be using data from 2021. The data is supposed reliable and original for this case study, it is comprehensive and current.
+We will be using data from 2019 because the monthly data from 2021 is incomplete. Furthermore we could suppose measures taken during the pandemic have changed the use patterns in a way that is not representative of long term use. The data is supposed reliable and original for this case study, it is comprehensive and still relatively current.
+
+The data includes:  
+
+ * The duration of each trip  
+ * Start and end points  
+ * The status of the client: member or casual rider  
+ * Their birth year and gender  
+
+This should allow us to compare demographics between member and casual riders, as well as the differences in usage of the service (routes, travel time etc).
 
 ## Process
 
@@ -31,57 +41,95 @@ Furthermore I would like to sharpen my R skills.
 
 * Data integrity 
 
-First I loaded part of the data set using  
-
-`January_trips <- read.csv(file='202101-divvy-tripdata.csv')`
-
-Then I get an idea of the dataset using  
-`head(January_trips)  
-View(January_trips)`
-
-I repeat this process for each month and check for data integrity.   
-
-`February_trips <- read.csv(file='202102-divvy-tripdata.csv')
-View(February_trips)`  
+First I loaded each csv file:
 
 
-`March_trips <- read.csv(file='202103-divvy-tripdata.csv')
-View(March_trips)`  
+``` {r, eval=F, echo=T}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(janitor)
+
+Quarter_1_trips <- read.csv(file='Divvy_Trips_2019_Q1.csv')
+#I have a look at it
+str(Quarter_1_trips)
+View(Quarter_1_trips)
+
+#loading each quarterly file and checking for data integrity
+Quarter_2_trips <- read.csv(file='Divvy_Trips_2019_Q2.csv')
+#I have a look at it
+str(Quarter_2_trips)
+View(Quarter_2_trips)
+```  
+
+Here we realized the column names for Q2 are inconsistent with the rest of the data set, so we decided to change them using the following:
+```{r, eval=FALSE, echo=TRUE}
+#list Q1 variable names
+ls(Quarter_1_trips)
+
+#replace the bad column names with the ones consistent with the rest of the dataset.
+names(Quarter_2_trips) <- c("trip_id", "start_time","end_time", "bikeid","tripduration","from_station_id","from_station_name","to_station_id","to_station_name","usertype","gender","birthyear")
+View(Quarter_2_trips)
+```
+
+After correcting the column names we can merge all the data frames together:
+```{r, eval=F, echo= T}
+Semester_1 <- full_join(Quarter_1_trips, Quarter_2_trips)
+glimpse(Semester_1)
+
+Semester_2<- full_join(Quarter_3_trips,Quarter_4_trips)
+glimpse(Semester_2)
+ 
+Yearly_trips <- full_join(Semester_1,Semester_2)
+glimpse(Yearly_trips)
+```
+We can start checking for duplicates or empty cells.
+```{r, eval= F, echo=TRUE}
+Yearly_trips %>%  get_dupes(trip_id)
+```
+
+Then we added a column with the day of the week calculated using `start_time` and `wday()`.  
+
+```{r, eval= F, echo=TRUE}
+
+# create a temp frame for dates
+library(lubridate)
+date_trips <- Yearly_trips %>%  select(trip_id, start_time)
+View(date_trips)
+
+View(date_trips)
+#join date_trips and Yearly_trips to populate day_of_week
+Yearly_trips_day <- left_join(Yearly_trips, date_trips)
+glimpse(Yearly_trips_day)
 
 
-`April_trips <- read.csv(file='202104-divvy-tripdata.csv')
-View(April_trips)`   
-  
-  `May_trips <- read.csv(file='202105-divvy-tripdata.csv')
-View(May_trips)`  
+```
 
+## Analysis 
 
-Here we can see that this file is incomplete.
-We are missing the data points for start_station_name, start_station_id, end_station_name, end_station_id.  
+First we start by filtering data depending on the status of the client: member or casual: 
+```{r, eval= F, echo=TRUE}
+# Create casual table 
+Yearly_casuals <-  filter(Yearly_clean, usertype == "Customer")
+glimpse(Yearly_casuals)
 
-Fortunately we can populate these data points using start_lat and start_long values and end_lat end_long and associating lat and long values with stations.
+#compare total and casual trips
+nrow(Yearly_clean) - nrow(Yearly_casuals)
 
-*Let's do that now*  
-  
-  We start by defining what are the stations on the network:
+#Create suscriber/ member table
+Yearly_members <-  filter(Yearly_clean, usertype == "Subscriber")
+glimpse(Yearly_members)
 
-`Stations <- April_trips %>% 
-  distinct(start_station_name, start_lng, start_lat,start_station_id)`  
-  
-   a few rows are empty in start_station_name we can just drop them  
-       
-`Stations <-  Stations %>%  distinct(start_station_name,.keep_all = TRUE)
-View(Stations)`
+```
+When doing `summary(Yearly_casuals)` and `summary(Yearly_members)` I realize a lot of my variable are in the wrong types.  
 
-we get this beautiful dataframe:
-![a screenshot ](Stations.png)  
-So we have 682 stations on the network, and now we have their matching ID and lat/lng.
+I tried using this as shown [here] (https://cran.r-project.org/web/packages/hablar/vignettes/convert.html)
+```{r, eval= F, echo=TRUE}
+install.packages("hablar")
+library(hablar)
+Yearly_casuals %>%  type.convert(num("tripduration"),as_date("start_time"), as_date("end_time"))
 
-However despite searching for a very long time trying to use `fill()` or some kind of join. I can't figure out how to populate the cells in May_trips.  
-  ![a screenshot ](May_trips_screenshot.png)   
-  
-  
-  Pls send help
-
-
-
+summary(Yearly_casuals)
+summary(Yearly_members)
+```
+But I get an error as shown [here]()
