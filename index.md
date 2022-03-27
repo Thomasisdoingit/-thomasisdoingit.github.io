@@ -136,4 +136,4 @@ summary(Yearly_members)
 ```  
 
 But I get an error:
-![the error] ()
+![the error] (wrong_data_type.png)
