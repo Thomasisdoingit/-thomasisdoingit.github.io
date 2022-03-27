@@ -41,7 +41,8 @@ Furthermore I would like to sharpen my R skills.
 
 * Data integrity 
 
-First I loaded each csv file:
+First I loaded each csv file:  
+
 
 
 ``` {r, eval=F, echo=T}
@@ -62,7 +63,8 @@ str(Quarter_2_trips)
 View(Quarter_2_trips)
 ```  
 
-Here we realized the column names for Q2 are inconsistent with the rest of the data set, so we decided to change them using the following:
+Here we realized the column names for Q2 are inconsistent with the rest of the data set, so we decided to change them using the following:  
+
 ```{r, eval=FALSE, echo=TRUE}
 #list Q1 variable names
 ls(Quarter_1_trips)
@@ -72,7 +74,8 @@ names(Quarter_2_trips) <- c("trip_id", "start_time","end_time", "bikeid","tripdu
 View(Quarter_2_trips)
 ```
 
-After correcting the column names we can merge all the data frames together:
+After correcting the column names we can merge all the data frames together:  
+
 ```{r, eval=F, echo= T}
 Semester_1 <- full_join(Quarter_1_trips, Quarter_2_trips)
 glimpse(Semester_1)
@@ -83,7 +86,8 @@ glimpse(Semester_2)
 Yearly_trips <- full_join(Semester_1,Semester_2)
 glimpse(Yearly_trips)
 ```
-We can start checking for duplicates or empty cells.
+We can start checking for duplicates or empty cells.  
+
 ```{r, eval= F, echo=TRUE}
 Yearly_trips %>%  get_dupes(trip_id)
 ```
@@ -106,7 +110,8 @@ glimpse(Yearly_trips_day)
 
 ## Analysis 
 
-First we start by filtering data depending on the status of the client: member or casual: 
+First we start by filtering data depending on the status of the client: member or casual:  
+
 ```{r, eval= F, echo=TRUE}
 # Create casual table 
 Yearly_casuals <-  filter(Yearly_clean, usertype == "Customer")
@@ -122,7 +127,8 @@ glimpse(Yearly_members)
 
 ## Analysis 
 
-First we start by filtering data depending on the status of the client: member or casual: 
+First we start by filtering data depending on the status of the client: member or casual:  
+
 ```{r, eval= F, echo=TRUE}
 # Create casual table 
 Yearly_casuals <-  filter(Yearly_clean, usertype == "Customer")
@@ -134,7 +140,8 @@ nrow(Yearly_clean) - nrow(Yearly_casuals)
 #Create suscriber/ member table
 Yearly_members <-  filter(Yearly_clean, usertype == "Subscriber")
 glimpse(Yearly_members)
-```
+```  
+
 When doing `summary(Yearly_casuals)` and `summary(Yearly_members)` I realize a lot of my variable are in the wrong types.  
 
 I tried using this as shown [here] (https://cran.r-project.org/web/packages/hablar/vignettes/convert.html)  
