@@ -149,5 +149,6 @@ summary(Yearly_casuals)
 summary(Yearly_members)
 ```  
 
-But I get an error:
+But I get an error:  
+
 ![the error](wrong_data_type.png)
