@@ -132,4 +132,5 @@ Yearly_casuals %>%  type.convert(num("tripduration"),as_date("start_time"), as_d
 summary(Yearly_casuals)
 summary(Yearly_members)
 ```
-But I get an error as shown [here]()
+But I get an error:
+![the error] (https://github.com/Thomasisdoingit/thomasisdoingit.github.io/blob/db5197072053a6f2d2a53b86d18d264cda80ffc7/wrong%20data%20type.png)
