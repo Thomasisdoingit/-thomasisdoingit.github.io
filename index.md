@@ -90,6 +90,7 @@ Yearly_trips %>%  get_dupes(trip_id)
 
 Then we added a column with the day of the week calculated using `start_time` and `wday()`.  
 
+
 ```{r, eval= F, echo=TRUE}
 
 # create a temp frame for dates
@@ -101,8 +102,6 @@ View(date_trips)
 #join date_trips and Yearly_trips to populate day_of_week
 Yearly_trips_day <- left_join(Yearly_trips, date_trips)
 glimpse(Yearly_trips_day)
-
-
 ```
 
 ## Analysis 
@@ -119,7 +118,22 @@ nrow(Yearly_clean) - nrow(Yearly_casuals)
 #Create suscriber/ member table
 Yearly_members <-  filter(Yearly_clean, usertype == "Subscriber")
 glimpse(Yearly_members)
+```
 
+## Analysis 
+
+First we start by filtering data depending on the status of the client: member or casual: 
+```{r, eval= F, echo=TRUE}
+# Create casual table 
+Yearly_casuals <-  filter(Yearly_clean, usertype == "Customer")
+glimpse(Yearly_casuals)
+
+#compare total and casual trips
+nrow(Yearly_clean) - nrow(Yearly_casuals)
+
+#Create suscriber/ member table
+Yearly_members <-  filter(Yearly_clean, usertype == "Subscriber")
+glimpse(Yearly_members)
 ```
 When doing `summary(Yearly_casuals)` and `summary(Yearly_members)` I realize a lot of my variable are in the wrong types.  
 
