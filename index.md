@@ -44,7 +44,7 @@ Furthermore I would like to sharpen my R skills.
 First I loaded each csv file:  
 
 
-```{r, eval=F, echo=T}
+```{r, eval=FALSE, echo=TRUE}
 library(readr)
 library(dplyr)
 library(tidyr)
@@ -75,7 +75,7 @@ View(Quarter_2_trips)
 
 After correcting the column names we can merge all the data frames together:  
 
-```{r, eval=F, echo= T}
+```{r, eval=FALSE, echo= TRUE}
 Semester_1 <- full_join(Quarter_1_trips, Quarter_2_trips)
 glimpse(Semester_1)
 
@@ -87,14 +87,14 @@ glimpse(Yearly_trips)
 ```
 We can start checking for duplicates or empty cells.  
 
-```{r, eval= F, echo=TRUE}
+```{r, eval= FALSE, echo=TRUE}
 Yearly_trips %>%  get_dupes(trip_id)
 ```
 
 Then we added a column with the day of the week calculated using `start_time` and `wday()`.  
 
 
-```{r, eval= F, echo=TRUE}
+```{r, eval= FALSE, echo=TRUE}
 
 # create a temp frame for dates
 library(lubridate)
@@ -111,7 +111,7 @@ glimpse(Yearly_trips_day)
 
 First we start by filtering data depending on the status of the client: member or casual:  
 
-```{r, eval= F, echo=TRUE}
+```{r, eval= FALSE , echo=TRUE}
 # Create casual table 
 Yearly_casuals <-  filter(Yearly_clean, usertype == "Customer")
 glimpse(Yearly_casuals)
@@ -128,7 +128,7 @@ glimpse(Yearly_members)
 
 First we start by filtering data depending on the status of the client: member or casual:  
 
-```{r, eval= F, echo=TRUE}
+```{r, eval= FALSE, echo=TRUE}
 # Create casual table 
 Yearly_casuals <-  filter(Yearly_clean, usertype == "Customer")
 glimpse(Yearly_casuals)
@@ -146,7 +146,7 @@ When doing `summary(Yearly_casuals)` and `summary(Yearly_members)` I realize a l
 I tried using this as shown [here] (https://cran.r-project.org/web/packages/hablar/vignettes/convert.html)  
   
   
-```{r, eval= F, echo=TRUE}
+```{r, eval= FALSE, echo=TRUE}
 install.packages("hablar")
 library(hablar)
 Yearly_casuals %>%  type.convert(num("tripduration"),as_date("start_time"), as_date("end_time"))
