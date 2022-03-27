@@ -45,6 +45,7 @@ First I loaded each csv file:
 
 
 ```{r, eval=F, echo=T}
+
 library(readr)
 library(dplyr)
 library(tidyr)
@@ -59,7 +60,8 @@ View(Quarter_1_trips)
 Quarter_2_trips <- read.csv(file='Divvy_Trips_2019_Q2.csv')
 #I have a look at it
 str(Quarter_2_trips)
-View(Quarter_2_trips)```  
+View(Quarter_2_trips)
+```  
 
 
 Here we realized the column names for Q2 are inconsistent with the rest of the data set, so we decided to change them using the following:  
@@ -70,7 +72,8 @@ ls(Quarter_1_trips)
 
 #replace the bad column names with the ones consistent with the rest of the dataset.
 names(Quarter_2_trips) <- c("trip_id", "start_time","end_time", "bikeid","tripduration","from_station_id","from_station_name","to_station_id","to_station_name","usertype","gender","birthyear")
-View(Quarter_2_trips)```  
+View(Quarter_2_trips)
+```  
 
 
 After correcting the column names we can merge all the data frames together:  
@@ -83,12 +86,14 @@ Semester_2<- full_join(Quarter_3_trips,Quarter_4_trips)
 glimpse(Semester_2)
  
 Yearly_trips <- full_join(Semester_1,Semester_2)
-glimpse(Yearly_trips)```  
+glimpse(Yearly_trips)
+```  
 
 We can start checking for duplicates or empty cells.  
 
 ```{r, eval=F, echo=T}
-Yearly_trips %>%  get_dupes(trip_id)```  
+Yearly_trips %>%  get_dupes(trip_id)
+```  
 
 
 Then we added a column with the day of the week calculated using `start_time` and `wday()`.  
@@ -104,7 +109,8 @@ View(date_trips)
 View(date_trips)
 #join date_trips and Yearly_trips to populate day_of_week
 Yearly_trips_day <- left_join(Yearly_trips, date_trips)
-glimpse(Yearly_trips_day)```  
+glimpse(Yearly_trips_day)
+```  
 
 
 ## Analysis 
@@ -121,7 +127,8 @@ nrow(Yearly_clean) - nrow(Yearly_casuals)
 
 #Create suscriber/ member table
 Yearly_members <-  filter(Yearly_clean, usertype == "Subscriber")
-glimpse(Yearly_members)```  
+glimpse(Yearly_members)
+```  
 
 
 ## Analysis 
@@ -138,7 +145,8 @@ nrow(Yearly_clean) - nrow(Yearly_casuals)
 
 #Create suscriber/ member table
 Yearly_members <-  filter(Yearly_clean, usertype == "Subscriber")
-glimpse(Yearly_members)```  
+glimpse(Yearly_members)
+```  
 
 
 When doing `summary(Yearly_casuals)` and `summary(Yearly_members)` I realize a lot of my variable are in the wrong types.  
@@ -152,7 +160,8 @@ library(hablar)
 Yearly_casuals %>%  type.convert(num("tripduration"),as_date("start_time"), as_date("end_time"))
 
 summary(Yearly_casuals)
-summary(Yearly_members)```  
+summary(Yearly_members)
+```  
 
 
 But I get an error:  
